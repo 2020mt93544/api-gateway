@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: api-gateway
+
+server:
+  port: 9000
+  http:
+    client:
+      read-timeout: 2m
+      max-content-length: 50mb
+
+ribbon:
+  eureka:
+    enabled: false
+
+zuul:
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 120000
+  sensitiveHeaders: Cookie,Set-Cookie
+  routes:
+    employee:
+      path: /employee/**
+      url: ${EMPLOYEE_HOST:http://localhost:9005/employee/}
+    department:
+      path: /department/**
+      url: ${DEPARTMENT_HOST:http://localhost:9010/department/}
+    salary:
+      path: /salary/**
+      url: ${SALARY_HOST:http://localhost:9020/salary/}
